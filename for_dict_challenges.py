@@ -12,13 +12,24 @@ students = [
     {'first_name': 'Маша'},
     {'first_name': 'Петя'},
 ]
-# ???
+
+name_counter = {}
+
+for student in students:
+    if student['first_name'] in name_counter:
+        name_counter[student['first_name']] += 1
+    else:
+        name_counter[student['first_name']] = 1
+
+for name, count in name_counter.items():
+    print(f'{name}: {count}')
 
 
 # Задание 2
 # Дан список учеников, нужно вывести самое часто повторящееся имя
 # Пример вывода:
 # Самое частое имя среди учеников: Маша
+
 students = [
     {'first_name': 'Вася'},
     {'first_name': 'Петя'},
@@ -26,7 +37,19 @@ students = [
     {'first_name': 'Маша'},
     {'first_name': 'Оля'},
 ]
-# ???
+
+name_counter = {}
+
+for student in students:
+    if student['first_name'] in name_counter:
+        name_counter[student['first_name']] += 1
+    else:
+        name_counter[student['first_name']] = 1
+
+print(
+    f'Самое частое имя среди учеников: '
+    f'{max(name_counter, key=name_counter.get)}'
+)
 
 
 # Задание 3
@@ -51,7 +74,18 @@ school_students = [
         {'first_name': 'Саша'},
     ],
 ]
-# ???
+
+for count, class_ in enumerate(school_students, start=1):
+    name_counter = {}
+    for student in class_:
+        if student['first_name'] in name_counter:
+            name_counter[student['first_name']] += 1
+        else:
+            name_counter[student['first_name']] = 1
+    print(
+        f'Самое частое имя в классе {count}: '
+        f'{max(name_counter, key=name_counter.get)}'
+    )
 
 
 # Задание 4
@@ -72,7 +106,19 @@ is_male = {
     'Миша': True,
     'Даша': False,
 }
-# ???
+
+for class_ in school:
+    gender_counter = {'male': 0, 'female': 0}
+    for student in class_['students']:
+        if is_male[student['first_name']]:
+            gender_counter['male'] += 1
+        else:
+            gender_counter['female'] += 1
+    print(
+        f'Класс {class_["class"]}: '
+        f'девочки {gender_counter["female"]}, '
+        f'мальчики {gender_counter["male"]}'
+    )
 
 
 # Задание 5
@@ -91,5 +137,28 @@ is_male = {
     'Олег': True,
     'Миша': True,
 }
-# ???
 
+female_counter = {}
+male_counter = {}
+
+for class_ in school:
+    for student in class_['students']:
+        if is_male[student['first_name']]:
+            if class_['class'] in male_counter:
+                male_counter[class_['class']] += 1
+            else:
+                male_counter[class_['class']] = 1
+        else:
+            if class_['class'] in female_counter:
+                female_counter[class_['class']] += 1
+            else:
+                female_counter[class_['class']] = 1
+
+print(
+    f'Больше всего мальчиков в классе '
+    f'{max(male_counter, key=male_counter.get)}'
+)
+print(
+    f'Больше всего девочек в классе '
+    f'{max(female_counter, key=female_counter.get)}'
+)

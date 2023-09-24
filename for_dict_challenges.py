@@ -4,6 +4,8 @@
 # Вася: 1
 # Маша: 2
 # Петя: 2
+from collections import defaultdict
+
 
 students = [
     {'first_name': 'Вася'},
@@ -13,13 +15,10 @@ students = [
     {'first_name': 'Петя'},
 ]
 
-name_counter = {}
+name_counter = defaultdict(int)
 
 for student in students:
-    if student['first_name'] in name_counter:
-        name_counter[student['first_name']] += 1
-    else:
-        name_counter[student['first_name']] = 1
+    name_counter[student['first_name']] += 1
 
 for name, count in name_counter.items():
     print(f'{name}: {count}')
@@ -38,13 +37,10 @@ students = [
     {'first_name': 'Оля'},
 ]
 
-name_counter = {}
+name_counter = defaultdict(int)
 
 for student in students:
-    if student['first_name'] in name_counter:
-        name_counter[student['first_name']] += 1
-    else:
-        name_counter[student['first_name']] = 1
+    name_counter[student['first_name']] += 1
 
 print(
     f'Самое частое имя среди учеников: '
@@ -76,12 +72,11 @@ school_students = [
 ]
 
 for count, class_ in enumerate(school_students, start=1):
-    name_counter = {}
+    name_counter = defaultdict(int)
+
     for student in class_:
-        if student['first_name'] in name_counter:
-            name_counter[student['first_name']] += 1
-        else:
-            name_counter[student['first_name']] = 1
+        name_counter[student['first_name']] += 1
+
     print(
         f'Самое частое имя в классе {count}: '
         f'{max(name_counter, key=name_counter.get)}'
@@ -108,7 +103,7 @@ is_male = {
 }
 
 for class_ in school:
-    gender_counter = {'male': 0, 'female': 0}
+    gender_counter = defaultdict(int)
     for student in class_['students']:
         if is_male[student['first_name']]:
             gender_counter['male'] += 1
@@ -138,21 +133,15 @@ is_male = {
     'Миша': True,
 }
 
-female_counter = {}
-male_counter = {}
+female_counter = defaultdict(int)
+male_counter = defaultdict(int)
 
 for class_ in school:
     for student in class_['students']:
         if is_male[student['first_name']]:
-            if class_['class'] in male_counter:
-                male_counter[class_['class']] += 1
-            else:
-                male_counter[class_['class']] = 1
+            male_counter[class_['class']] += 1
         else:
-            if class_['class'] in female_counter:
-                female_counter[class_['class']] += 1
-            else:
-                female_counter[class_['class']] = 1
+            female_counter[class_['class']] += 1
 
 print(
     f'Больше всего мальчиков в классе '

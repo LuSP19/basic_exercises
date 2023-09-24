@@ -31,6 +31,7 @@ messages = [
 Весь код стоит разбить на логические части с помощью функций.
 """
 
+from collections import defaultdict
 import random
 import uuid
 import datetime
@@ -39,13 +40,10 @@ import lorem
 
 
 def count_user_messages(chat_history):
-    user_messages_count = {}
+    user_messages_count = defaultdict(int)
     for message in chat_history:
         user_id = message['sent_by']
-        if user_id in user_messages_count:
-            user_messages_count[user_id] += 1
-        else:
-            user_messages_count[user_id] = 1
+        user_messages_count[user_id] += 1
 
     return user_messages_count
 
@@ -84,15 +82,12 @@ def count_unique_viewers(chat_history):
 
 
 def count_replies_to_messages(chat_history):
-    replies_to_messages_count = {}
+    replies_to_messages_count = defaultdict(int)
     for message in chat_history:
         message_id = message['reply_for']
         if message_id is None:
             continue
-        if message_id in replies_to_messages_count:
-            replies_to_messages_count[message_id] += 1
-        else:
-            replies_to_messages_count[message_id] = 1
+        replies_to_messages_count[message_id] += 1
 
     return replies_to_messages_count
 
@@ -113,11 +108,7 @@ def count_replies_to_users(chat_history):
 
 
 def get_daily_activity(chat_history):
-    daily_activity = {
-        'morning': 0,
-        'afternoons': 0,
-        'evening': 0
-    }
+    daily_activity = defaultdict(int)
     for message in chat_history:
         sent_at_hour = message['sent_at'].hour
         if sent_at_hour < 12:
